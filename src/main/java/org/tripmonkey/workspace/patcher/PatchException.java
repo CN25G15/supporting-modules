@@ -1,4 +1,4 @@
-package org.tripmonkey.workspace.data.jsonpatch.applier;
+package org.tripmonkey.workspace.patcher;
 
 public class PatchException extends RuntimeException {
 

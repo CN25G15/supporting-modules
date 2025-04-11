@@ -1,7 +1,4 @@
-package org.tripmonkey.workspace.data.jsonpatch.fields.op;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+package org.tripmonkey.workspace.rest.data.fields.op;
 
 import java.util.Arrays;
 
@@ -21,7 +18,7 @@ public enum OperationType {
     }
 
     public static OperationType forValue(String s) {
-        return Arrays.stream(values()).filter(ot -> s.equals(ot.op)).findFirst().orElse(INVALID);
+        return Arrays.stream(values()).filter(ot -> s.toLowerCase().equals(ot.op)).findFirst().orElse(INVALID);
     }
 
     public String toValue() {

@@ -1,6 +1,7 @@
-package org.tripmonkey.workspace.data.jsonpatch.fields.op;
+package org.tripmonkey.workspace.rest.data.fields.op;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public class OperationWrapper {
@@ -9,7 +10,7 @@ public class OperationWrapper {
     private OperationType op;
 
     @JsonCreator
-    public static OperationWrapper getOperationTarget(String s){
+    public static OperationWrapper getOperationTarget(@JsonProperty("op") String s){
         OperationWrapper opt = new OperationWrapper();
         opt.operationString = s;
         opt.op = OperationType.forValue(s);

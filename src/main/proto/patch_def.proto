@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+import "patch_contents.proto";
+import "google/protobuf/any.proto";
+
+option java_multiple_files = true;
+option java_package = "org.tripmonkey.patch.data";
+option java_outer_classname = "PatchGRPC";
+
+package patchgrpc;
+
+enum Operation {
+    unknown = 0;
+    add = 1;
+    remove = 2;
+    replace = 3;
+    move = 4;
+    copy = 5;
+    test = 6;
+}
+
+
+message JSONPatch {
+    Operation op = 1;
+    string path = 2;
+    google.protobuf.Any value = 3;
+}
+
+message WorkspacePatch {
+    string workspace_id = 1;
+    User user = 2;
+    JSONPatch patch = 3;
+}
+
+message PatchStatus {
+    WorkspacePatch user_patch = 1;
+    int64 status = 2;
+}

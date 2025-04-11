@@ -1,4 +1,4 @@
-package org.tripmonkey.workspace.data;
+package org.tripmonkey.workspace.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

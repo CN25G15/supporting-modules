@@ -1,13 +1,15 @@
-package org.tripmonkey.workspace.data.jsonpatch.fields.path;
+package org.tripmonkey.workspace.rest.data.fields.path;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public class PathTarget {
 
+
+
     private String pathString;
     private OperationPath path;
-    private String target;
+    private String[] target;
 
     @JsonCreator
     public static PathTarget getTargetFor(String s) {
@@ -15,7 +17,7 @@ public class PathTarget {
         p.pathString = s;
         p.path = OperationPath.getPathFor(s);
         if(p.path != OperationPath.INVALID){
-            p.target = s.substring(p.path.getPath().length(),s.length()-1);
+            p.target = s.substring(p.path.getPath().length(),s.length()-1).split("/");
         }
         return p;
     }
@@ -24,7 +26,7 @@ public class PathTarget {
         return path;
     }
 
-    public String getTarget() { return target; }
+    public String getTarget(int index) { return target[index]; }
 
     @JsonValue
     public String toString(){

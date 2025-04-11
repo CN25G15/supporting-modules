@@ -1,8 +1,8 @@
-package org.tripmonkey.workspace.data.jsonpatch.applier;
+package org.tripmonkey.workspace.patcher;
 
-import org.tripmonkey.workspace.data.Itinerary;
-import org.tripmonkey.workspace.data.Workspace;
-import org.tripmonkey.workspace.data.location.data.LocationData;
+import org.tripmonkey.workspace.domain.Itinerary;
+import org.tripmonkey.workspace.domain.Workspace;
+import org.tripmonkey.workspace.domain.location.LocationData;
 
 public interface PatchVisitor {
 

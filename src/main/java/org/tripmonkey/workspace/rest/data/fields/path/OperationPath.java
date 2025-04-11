@@ -1,13 +1,13 @@
-package org.tripmonkey.workspace.data.jsonpatch.fields.path;
+package org.tripmonkey.workspace.rest.data.fields.path;
 
 import java.util.Arrays;
 
 public enum OperationPath {
-    INVITED("/workspace/invited"),
-    COLLABORATORS("/workspace/collaborators"),
-    LOC_LISTS("/workspace/location_lists"),
-    ITINERARIES("/workspace/itineraries"),
-    LOC_DATA("/workspace/location_data"),
+    INVITED("/invited"),
+    COLLABORATORS("/collaborators"),
+    LOC_LISTS("/location_lists"),
+    ITINERARIES("/itineraries"),
+    LOC_DATA("/location_data"),
     INVALID(null);
 
     private String path;

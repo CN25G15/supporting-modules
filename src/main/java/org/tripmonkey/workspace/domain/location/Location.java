@@ -1,13 +1,16 @@
-package org.tripmonkey.workspace.data.location;
+package org.tripmonkey.workspace.domain.location;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.json.bind.annotation.JsonbProperty;
 
 public class Location {
 
-    @JsonProperty String place_id;
+    @JsonbProperty String place_id;
 
-    public Location(String id){
-        this.place_id = id;
+    public static Location from(String id){
+        Location l = new Location();
+        l.place_id = id;
+        return l;
     }
 
     public String getId(){
@@ -24,4 +27,8 @@ public class Location {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return place_id;
+    }
 }
