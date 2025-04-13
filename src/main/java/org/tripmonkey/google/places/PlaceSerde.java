@@ -1,9 +1,9 @@
 package org.tripmonkey.google.places;
 
 import org.tripmonkey.google.places.data.Place;
-import org.tripmonkey.workspace.grpc.serde.GRPCSerde;
+import org.tripmonkey.proto.mapper.ProtoSerde;
 
-public class PlaceSerde extends GRPCSerde<Place, org.tripmonkey.proto.google.places.data.Place> {
+public class PlaceSerde extends ProtoSerde<Place, org.tripmonkey.proto.google.places.data.Place> {
 
     public PlaceSerde(){}
 

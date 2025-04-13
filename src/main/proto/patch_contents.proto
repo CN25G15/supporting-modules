@@ -1,36 +1,28 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "org.tripmonkey.patch.contents.data";
-option java_outer_classname = "PatchGRPC";
+option java_package = "org.tripmonkey.proto.contents.data";
 
 package patchgrpc;
 
-message User {
-  string id = 1;
+message UserDTO {
+  string user_id = 1;
 }
 
-message Comment {
-  User user = 1;
-  string contents = 2;
+message CommentDTO {
+  string contents = 1;
 }
 
-message Location {
-  string uuid = 1;
+message LocationDTO {
+  string place_id = 1;
 }
 
-message LocationData {
-  string description = 1;
-  repeated Comment comments = 2;
-  repeated string tags = 3;
+message LocationMetadataDTO {
+  optional string description = 1;
+  repeated string tags = 2;
 }
 
-message LocationDataWrapper {
-  Location location = 1;
-  LocationData loc_data = 2;
-}
-
-message LocationListHeader {
-  string name = 1;
-  User user = 2;
+message LocationListDTO {
+  optional string name = 1;
+  repeated LocationDTO locations = 2;
 }
