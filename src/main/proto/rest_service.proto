@@ -1,4 +1,5 @@
 import "patch_def.proto";
+import "workspace_contents.proto";
 
 option java_multiple_files = true;
 option java_package = "org.tripmonkey.workspace.service";
@@ -7,4 +8,8 @@ package patchgrpc;
 
 service PatchApplier {
   rpc Apply (patchgrpc.WorkspacePatch) returns (patchgrpc.Status) {}
+}
+
+service WorkspaceRequester {
+  rpc Fetch (WorkspaceRequest) returns (Workspace) {}
 }

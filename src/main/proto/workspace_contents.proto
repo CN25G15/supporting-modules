@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.tripmonkey.workspace.service";
+option java_outer_classname = "PlaceProto";
+
+message WorkspaceRequest {
+  string wid = 1;
+}
+
+message User {
+  string user_id = 1;
+}
+
+message Location {
+  string place_id = 1;
+}
+
+message LocationList {
+  string name = 1;
+  repeated Location locations = 2;
+}
+
+message Workspace {
+  string wid = 1;
+  repeated User collaborators = 2;
+  repeated LocationList location_lists = 3;
+}
