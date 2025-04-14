@@ -26,3 +26,7 @@ message Workspace {
   repeated User collaborators = 2;
   repeated LocationList location_lists = 3;
 }
+
+message WorkspaceResponse {
+  optional Workspace workspace = 1;
+}

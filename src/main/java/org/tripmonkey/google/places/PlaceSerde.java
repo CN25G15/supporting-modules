@@ -1,7 +1,7 @@
 package org.tripmonkey.google.places;
 
 import org.tripmonkey.google.places.data.Place;
-import org.tripmonkey.proto.mapper.ProtoSerde;
+import org.tripmonkey.proto.ProtoSerde;
 
 public class PlaceSerde extends ProtoSerde<Place, org.tripmonkey.proto.google.places.data.Place> {
 

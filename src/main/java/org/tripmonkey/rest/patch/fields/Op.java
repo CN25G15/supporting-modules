@@ -1,7 +1,5 @@
 package org.tripmonkey.rest.patch.fields;
 
-import jakarta.json.bind.annotation.JsonbCreator;
-import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTypeDeserializer;
 import jakarta.json.bind.annotation.JsonbTypeSerializer;
 import org.tripmonkey.rest.patch.serde.fields.OpDeserializer;

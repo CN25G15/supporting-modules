@@ -1,9 +1,9 @@
-package org.tripmonkey.proto.mapper;
+package org.tripmonkey.proto;
 
 import org.tripmonkey.patch.data.Operation;
 import org.tripmonkey.rest.patch.fields.Op;
 
-public class PatchOperationMapper extends ProtoSerde<Op, org.tripmonkey.patch.data.Operation> {
+public class PatchOperationMapper extends ProtoSerde<Op, Operation> {
 
     @Override
     protected Operation serialize(Op d) {

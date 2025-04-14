@@ -1,4 +1,4 @@
-package org.tripmonkey.proto.mapper;
+package org.tripmonkey.proto;
 
 public abstract class ProtoSerde<DOMAIN, PROTO> {
 
@@ -12,6 +12,7 @@ public abstract class ProtoSerde<DOMAIN, PROTO> {
     public static UserMapper userMapper = new UserMapper();
     public static LocationListMapper locationListMapper = new LocationListMapper();
     public static WorkspaceMapper workspaceMapper = new WorkspaceMapper();
+    public static WorkspacePatchMapper workspacePatchMapper = new WorkspacePatchMapper();
 
     protected abstract PROTO serialize(DOMAIN d);
 

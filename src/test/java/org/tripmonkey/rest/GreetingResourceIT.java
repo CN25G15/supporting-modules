@@ -1,4 +1,4 @@
-package org.tripmonkey;
+package org.tripmonkey.rest;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 

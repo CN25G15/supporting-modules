@@ -1,8 +1,5 @@
-package org.tripmonkey.proto.mapper;
+package org.tripmonkey.proto;
 
-import com.google.protobuf.Any;
-import com.google.protobuf.Empty;
-import com.google.protobuf.Message;
 import org.tripmonkey.rest.domain.data.CommentDTO;
 import org.tripmonkey.rest.domain.data.LocationDTO;
 import org.tripmonkey.rest.domain.data.LocationListDTO;

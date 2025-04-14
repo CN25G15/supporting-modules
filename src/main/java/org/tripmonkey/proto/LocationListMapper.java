@@ -1,4 +1,4 @@
-package org.tripmonkey.proto.mapper;
+package org.tripmonkey.proto;
 
 import org.tripmonkey.domain.data.LocationList;
 

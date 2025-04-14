@@ -5,7 +5,6 @@ import jakarta.json.bind.annotation.JsonbProperty;
 import org.tripmonkey.rest.domain.data.LocationListDTO;
 
 import java.util.List;
-import java.util.UUID;
 
 public class LocationList {
 
