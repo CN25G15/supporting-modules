@@ -1,0 +1,12 @@
+import "patch_def.proto";
+import "workspace_contents.proto";
+
+option java_multiple_files = true;
+option java_package = "org.tripmonkey.notification.service";
+
+package patchgrpc;
+
+message Notification {
+  repeated User users = 1;
+  required WorkspacePatch action = 2;
+}

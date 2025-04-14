@@ -11,5 +11,5 @@ service PatchPersister {
 }
 
 service FetchWorkspace {
-  rpc Fetch (WorkspaceRequest) returns (Workspace) {}
+  rpc Fetch (WorkspaceRequest) returns (WorkspaceResponse) {}
 }
