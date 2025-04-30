@@ -6,6 +6,10 @@ option java_package = "org.tripmonkey.workspace.service";
 
 package patchgrpc;
 
+service WorkspaceCreator {
+  rpc Create (User) returns (WorkspaceResponse) {}
+}
+
 service PatchApplier {
   rpc Apply (patchgrpc.WorkspacePatch) returns (patchgrpc.Status) {}
 }

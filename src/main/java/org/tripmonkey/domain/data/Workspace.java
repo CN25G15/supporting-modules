@@ -6,6 +6,7 @@ import org.tripmonkey.rest.domain.WorkspacePatch;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class Workspace {
 
@@ -45,6 +46,10 @@ public class Workspace {
         w.collaborators = collaborators;
         w.locationLists = locationLists;
         return w;
+    }
+
+    public static Workspace createFor(User u) {
+        return from(UUID.randomUUID().toString(), List.of(u), List.of(LocationList.newSaved()));
     }
 
 }

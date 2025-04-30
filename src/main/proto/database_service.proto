@@ -6,6 +6,10 @@ option java_package = "org.tripmonkey.database.service";
 
 package patchgrpc;
 
+service CreateWorkspace {
+  rpc Create(Workspace) returns (WorkspaceResponse) {}
+}
+
 service PatchPersister {
   rpc Apply (patchgrpc.WorkspacePatch) returns (patchgrpc.Status) {}
 }
