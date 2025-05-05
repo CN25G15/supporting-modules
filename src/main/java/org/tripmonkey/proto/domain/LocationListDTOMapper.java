@@ -1,11 +1,11 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 import org.tripmonkey.proto.contents.data.LocationListDTO;
 
 import java.util.List;
 import java.util.Optional;
 
-public class LocationListDTOMapper extends ProtoSerde<org.tripmonkey.rest.domain.data.LocationListDTO, LocationListDTO> {
+public class LocationListDTOMapper extends ProtoMapper<org.tripmonkey.rest.domain.data.LocationListDTO, LocationListDTO> {
     
     @Override
     protected LocationListDTO serialize(org.tripmonkey.rest.domain.data.LocationListDTO d) {

@@ -1,8 +1,8 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 import org.tripmonkey.domain.data.Location;
 
-public class LocationMapper extends ProtoSerde<Location, org.tripmonkey.workspace.service.Location> {
+public class LocationMapper extends ProtoMapper<Location, org.tripmonkey.workspace.service.Location> {
 
     @Override
     protected org.tripmonkey.workspace.service.Location serialize(Location d) {

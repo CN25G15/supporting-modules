@@ -1,9 +1,9 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 import org.tripmonkey.rest.domain.WorkspacePatch;
 import org.tripmonkey.rest.patch.fields.path.PathNode;
 
-public class WorkspacePatchMapper extends ProtoSerde<WorkspacePatch, org.tripmonkey.patch.data.WorkspacePatch> {
+public class WorkspacePatchMapper extends ProtoMapper<WorkspacePatch, org.tripmonkey.patch.data.WorkspacePatch> {
 
     @Override
     public org.tripmonkey.patch.data.WorkspacePatch serialize(WorkspacePatch d) {

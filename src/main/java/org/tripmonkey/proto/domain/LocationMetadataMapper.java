@@ -1,4 +1,4 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 public class LocationMetadataMapper {
     /* TBI */

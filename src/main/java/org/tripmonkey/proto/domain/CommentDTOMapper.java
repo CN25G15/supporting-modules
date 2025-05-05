@@ -1,8 +1,8 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 import org.tripmonkey.proto.contents.data.CommentDTO;
 
-public class CommentDTOMapper extends ProtoSerde<org.tripmonkey.rest.domain.data.CommentDTO, CommentDTO> {
+public class CommentDTOMapper extends ProtoMapper<org.tripmonkey.rest.domain.data.CommentDTO, CommentDTO> {
 
     @Override
     protected CommentDTO serialize(org.tripmonkey.rest.domain.data.CommentDTO d) {

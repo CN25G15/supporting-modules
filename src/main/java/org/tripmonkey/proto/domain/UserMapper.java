@@ -1,8 +1,8 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 import org.tripmonkey.domain.data.User;
 
-public class UserMapper extends ProtoSerde<User, org.tripmonkey.workspace.service.User> {
+public class UserMapper extends ProtoMapper<User, org.tripmonkey.workspace.service.User> {
     @Override
     public org.tripmonkey.workspace.service.User serialize(User d) {
         return org.tripmonkey.workspace.service.User.newBuilder()

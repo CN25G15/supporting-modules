@@ -1,8 +1,8 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 import org.tripmonkey.proto.contents.data.LocationDTO;
 
-public class LocationDTOMapper extends ProtoSerde<org.tripmonkey.rest.domain.data.LocationDTO, LocationDTO> {
+public class LocationDTOMapper extends ProtoMapper<org.tripmonkey.rest.domain.data.LocationDTO, LocationDTO> {
     @Override
     protected LocationDTO serialize(org.tripmonkey.rest.domain.data.LocationDTO d) {
         return LocationDTO.newBuilder()

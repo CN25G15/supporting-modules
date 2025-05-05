@@ -1,8 +1,8 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 import org.tripmonkey.proto.contents.data.UserDTO;
 
-public class UserDTOMapper extends ProtoSerde<org.tripmonkey.rest.domain.data.UserDTO, UserDTO> {
+public class UserDTOMapper extends ProtoMapper<org.tripmonkey.rest.domain.data.UserDTO, UserDTO> {
 
 
     @Override

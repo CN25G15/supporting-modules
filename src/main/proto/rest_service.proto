@@ -1,3 +1,5 @@
+syntax = "proto3";
+
 import "patch_def.proto";
 import "workspace_contents.proto";
 

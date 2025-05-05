@@ -1,6 +1,6 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
-public abstract class ProtoSerde<DOMAIN, PROTO> {
+public abstract class ProtoMapper<DOMAIN, PROTO> {
 
     public static UserDTOMapper userSerde = new UserDTOMapper();
     public static CommentDTOMapper commentSerde = new CommentDTOMapper();
@@ -13,6 +13,9 @@ public abstract class ProtoSerde<DOMAIN, PROTO> {
     public static LocationListMapper locationListMapper = new LocationListMapper();
     public static WorkspaceMapper workspaceMapper = new WorkspaceMapper();
     public static WorkspacePatchMapper workspacePatchMapper = new WorkspacePatchMapper();
+
+    public static PlaceLocationMapper placeLocationMapper = new PlaceLocationMapper();
+    public static GeometryMapper geometryMapper = new GeometryMapper();
 
     protected abstract PROTO serialize(DOMAIN d);
 

@@ -1,4 +1,4 @@
-package org.tripmonkey.proto;
+package org.tripmonkey.proto.domain;
 
 import org.tripmonkey.rest.domain.data.CommentDTO;
 import org.tripmonkey.rest.domain.data.LocationDTO;
@@ -7,7 +7,7 @@ import org.tripmonkey.rest.domain.data.UserDTO;
 import org.tripmonkey.rest.domain.value.ValueType;
 import org.tripmonkey.rest.domain.value.ValueWrapper;
 
-public class ValueWrapperMapper extends ProtoSerde<ValueWrapper, org.tripmonkey.patch.data.ValueWrapper> {
+public class ValueWrapperMapper extends ProtoMapper<ValueWrapper, org.tripmonkey.patch.data.ValueWrapper> {
 
     @Override
     protected org.tripmonkey.patch.data.ValueWrapper serialize(ValueWrapper d) {
