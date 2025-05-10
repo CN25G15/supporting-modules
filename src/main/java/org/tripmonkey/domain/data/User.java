@@ -35,4 +35,8 @@ public class User {
         return from(udto.toString());
     }
 
+    public String toString() {
+        return user_id;
+    }
+
 }
