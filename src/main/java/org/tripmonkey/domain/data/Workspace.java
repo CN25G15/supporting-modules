@@ -2,6 +2,7 @@ package org.tripmonkey.domain.data;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTransient;
+import org.tripmonkey.domain.patch.PatchVisitor;
 import org.tripmonkey.rest.domain.WorkspacePatch;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class Workspace {
     @JsonbProperty List<User> collaborators;
     @JsonbProperty List<LocationList> locationLists;
     @JsonbTransient Map<Location, LocationMetadata> locationData; //TODO remove transient to implement LocationMetadata
-    @JsonbTransient List<WorkspacePatch> history = List.of();
+    @JsonbTransient List<PatchVisitor> history = List.of();
 
     public String getWid() {
         return wid;
@@ -32,11 +33,11 @@ public class Workspace {
         return locationData;
     }
 
-    public List<WorkspacePatch> getHistory() {
+    public List<PatchVisitor> getHistory() {
         return history;
     }
 
-    public void setHistory(List<WorkspacePatch> history) {
+    public void setHistory(List<PatchVisitor> history) {
         this.history = history;
     }
 

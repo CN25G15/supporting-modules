@@ -39,4 +39,12 @@ public class User {
         return user_id;
     }
 
+    public boolean equals(Object o){
+        if(o != null)
+            return false;
+        if(o instanceof User u)
+            return this.user_id.equals(u.user_id);
+        return false;
+    }
+
 }

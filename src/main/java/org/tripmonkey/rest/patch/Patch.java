@@ -1,19 +1,16 @@
 package org.tripmonkey.rest.patch;
 
-import jakarta.json.bind.annotation.JsonbTypeDeserializer;
-import jakarta.json.bind.annotation.JsonbTypeSerializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tripmonkey.rest.patch.fields.Op;
 import org.tripmonkey.rest.patch.fields.path.PathNode;
-import org.tripmonkey.rest.patch.serde.PatchDeserializer;
-import org.tripmonkey.rest.patch.serde.PatchSerializer;
+import org.tripmonkey.rest.patch.fields.value.SuperValueDTO;
+import org.tripmonkey.rest.patch.fields.value.ValueType;
 
-@JsonbTypeSerializer(PatchSerializer.class)
-@JsonbTypeDeserializer(PatchDeserializer.class)
 public class Patch {
 
-     Op op;
-     PathNode path;
-     Object value;
+     @JsonProperty Op op;
+     @JsonProperty PathNode path;
+     @JsonProperty SuperValueDTO value;
 
     public Op getOp() {
         return op;
@@ -23,15 +20,28 @@ public class Patch {
         return path;
     }
 
-    public Object getValue() {
+    public SuperValueDTO getValue() {
         return value;
     }
 
-    public static Patch from(Op op, PathNode pn, Object v) {
+    public static Patch from(Op op, PathNode pn, SuperValueDTO v) {
         Patch p = new Patch();
         p.op = op;
         p.path = pn;
         p.value = v;
         return p;
+    }
+
+    public boolean isValid() {
+        return !Op.INVALID.equals(op)
+                && !PathNode.INVALID.equals(path)
+                && !ValueType.INVALID.equals(value.getType());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("{\"op\":\"%s\",", op.toString()) +
+                String.format("\"path\":\"%s\",", path.toString()) +
+                String.format("\"value\":%s}", value.toString());
     }
 }

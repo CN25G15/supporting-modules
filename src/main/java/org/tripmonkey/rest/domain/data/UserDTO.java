@@ -1,15 +1,8 @@
 package org.tripmonkey.rest.domain.data;
 
-import jakarta.json.bind.annotation.JsonbTypeDeserializer;
-import jakarta.json.bind.annotation.JsonbTypeSerializer;
-import org.tripmonkey.rest.domain.serde.UserDeserializer;
-import org.tripmonkey.rest.domain.serde.UserSerializer;
-
 import java.util.Optional;
 import java.util.UUID;
 
-@JsonbTypeSerializer(UserSerializer.class)
-@JsonbTypeDeserializer(UserDeserializer.class)
 public class UserDTO {
 
     UUID id;

@@ -1,14 +1,10 @@
 package org.tripmonkey.rest.patch.fields;
 
-import jakarta.json.bind.annotation.JsonbTypeDeserializer;
-import jakarta.json.bind.annotation.JsonbTypeSerializer;
-import org.tripmonkey.rest.patch.serde.fields.OpDeserializer;
-import org.tripmonkey.rest.patch.serde.fields.OpSerializer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 
-@JsonbTypeSerializer(OpSerializer.class)
-@JsonbTypeDeserializer(OpDeserializer.class)
 public enum Op {
     ADD("add"),
     REMOVE("remove"),
@@ -24,10 +20,12 @@ public enum Op {
         this.op = s;
     }
 
+    @JsonCreator
     public static Op forValue(String s) {
         return Arrays.stream(values()).filter(ot -> s.toLowerCase().equals(ot.op)).findFirst().orElse(INVALID);
     }
 
+    @JsonValue
     public String toValue() {
         return this.op;
     }

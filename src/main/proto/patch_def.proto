@@ -18,23 +18,18 @@ enum Operation {
     test = 6;
 }
 
-message ValueWrapper {
-    string type = 1;
-    oneof value {
-     CommentDTO comment = 2;
-     LocationDTO location = 3;
-     LocationListDTO locationlist = 4;
-     LocationMetadataDTO locationmetadata = 5;
-     UserDTO user = 6;
-    }
-}
-
 message WorkspacePatch {
     string workspace_id = 1;
     string user = 2;
     Operation op = 3;
     string path = 4;
-    ValueWrapper value = 5;
+    oneof value {
+      CommentDTO comment = 5;
+      LocationDTO location = 6;
+      LocationListDTO locationlist = 7;
+      LocationMetadataDTO locationmetadata = 8;
+      UserDTO user_id = 9;
+    }
 }
 
 message Status {

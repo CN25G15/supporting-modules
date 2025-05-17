@@ -1,15 +1,11 @@
 package org.tripmonkey.rest.patch.fields.path;
 
-import jakarta.json.bind.annotation.JsonbTypeDeserializer;
-import jakarta.json.bind.annotation.JsonbTypeSerializer;
-import org.tripmonkey.rest.patch.serde.fields.PathNodeDeserializer;
-import org.tripmonkey.rest.patch.serde.fields.PathNodeSerializer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-@JsonbTypeSerializer(PathNodeSerializer.class)
-@JsonbTypeDeserializer(PathNodeDeserializer.class)
 public class PathNode {
 
     public static PathNode INVALID = new PathNode(TargetType.INVALID, null);
@@ -51,10 +47,12 @@ public class PathNode {
         return pn;
     }
 
+    @JsonCreator
     static public PathNode from(String full_path){
         return from(null ,full_path.split("/"));
     }
 
+    @JsonValue
     public String toString(){
         StringBuilder b = new StringBuilder();
         b.append(this.targetType);

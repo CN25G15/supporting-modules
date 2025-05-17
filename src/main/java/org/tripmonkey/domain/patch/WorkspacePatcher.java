@@ -1,87 +1,62 @@
 package org.tripmonkey.domain.patch;
 
-
 import org.tripmonkey.domain.data.Location;
 import org.tripmonkey.domain.data.LocationList;
 import org.tripmonkey.domain.data.User;
 import org.tripmonkey.domain.data.Workspace;
-import org.tripmonkey.rest.domain.WorkspacePatch;
-import org.tripmonkey.rest.domain.data.LocationDTO;
-import org.tripmonkey.rest.domain.data.LocationListDTO;
-import org.tripmonkey.rest.domain.data.UserDTO;
-import org.tripmonkey.rest.domain.value.ValueType;
-import org.tripmonkey.rest.domain.value.ValueWrapper;
+import org.tripmonkey.rest.domain.value.CommentPatch;
+import org.tripmonkey.rest.domain.value.LocationListPatch;
+import org.tripmonkey.rest.domain.value.LocationMetadataPatch;
+import org.tripmonkey.rest.domain.value.LocationPatch;
+import org.tripmonkey.rest.domain.value.UserPatch;
+import org.tripmonkey.rest.patch.fields.Op;
 import org.tripmonkey.rest.patch.fields.path.PathNode;
 import org.tripmonkey.rest.patch.fields.path.TargetType;
 
-import java.util.List;
-import java.util.Optional;
 
-public class WorkspacePatcher {
+public class WorkspacePatcher implements PatchApplier {
 
-    WorkspacePatch wp;
+    Workspace w;
 
-    public static WorkspacePatcher forPatch(WorkspacePatch wp) {
+    public static WorkspacePatcher forWorkspace(Workspace w) {
         WorkspacePatcher wpr = new WorkspacePatcher();
-        wpr.wp = wp;
+        wpr.w = w;
         return wpr;
     }
 
-    public void setWorkspacePatch(WorkspacePatch wp){
-        this.wp = wp;
-    }
-
-    private void operateOnUsers(List<User> users) throws WorkspacePatchException  {
-        ValueWrapper vw = this.wp.getValue();
-        switch(this.wp.getOp()){
-            case ADD -> {
-                if(!ValueType.USER.equals(vw.getType()) && vw.getValue() instanceof UserDTO u){
-                    User.from(u).stream().findFirst().filter(user -> !users.contains(user)).map(users::add)
-                            .orElseThrow(() ->  new WorkspacePatchException("Invalid UUID for user."));
-                }
-            }
+    @Override
+    public void apply(UserPatch up) throws WorkspacePatchException {
+        switch(up.getOp()){
+            case ADD ->User.from(up.getValue())
+                    .stream().findFirst()
+                    .filter(user -> !w.getCollaborators().contains(user))
+                    .map(user -> w.getCollaborators().add(user))
+                    .orElseThrow(() ->  new WorkspacePatchException("Invalid UUID for user."));
             case REMOVE -> {
-                String userId = this.wp.getPath().getTarget();
-                Optional.ofNullable(userId).map(User::from)
-                        .orElseThrow(() ->  new WorkspacePatchException("Invalid path for operation remove. No user received."))
-                        .map(toRemove -> users.removeIf(user -> toRemove.toString().equals(user.toString())))
-                        .orElseThrow(() ->  new WorkspacePatchException("Invalid UUID for user."));
+                User u = User.from(up.getPath().getTarget())
+                    .stream().findFirst()
+                        .orElseThrow(() -> new WorkspacePatchException(String.format("Invalid UUID for user: %s",
+                                up.getValue().toString())));
+                w.getCollaborators().stream()
+                        .filter(user -> user.equals(u))
+                        .findFirst()
+                        .map(user -> w.getCollaborators().remove(user))
+                        .orElseThrow(() -> new WorkspacePatchException("User doesn't exist in workspace: %s"));
             }
             default -> throw new WorkspacePatchException(String.format("Invalid operation %s for field %s.",
-                    this.wp.getOp().toString(),
-                    this.wp.getPath().toString()));
+                    up.getOp().toString(),
+                    up.getPath().toString()));
         }
     }
 
-    public void operateOnLocLists(List<LocationList> lll) {
+    @Override
+    public void apply(LocationPatch lp) throws WorkspacePatchException {
 
-        switch(this.wp.getOp()) {
-            case ADD -> {
+        switch(lp.getPath().getTargetType()){
 
-                /* Create new List */
-                if(!this.wp.getPath().hasNextNode()
-                        && this.wp.getValue().getType().equals(ValueType.LOC_LIST)
-                        && this.wp.getValue().getValue() instanceof LocationListDTO listDTO) {
-                    lll.add(LocationList.from(listDTO));
-                    return;
-                }
-                if(!this.wp.getPath().hasNextNode())
-                    throw new WorkspacePatchException(
-                            String.format("Invalid request for field %s.",this.wp.getPath().toString()));
-
-                PathNode next = this.wp.getPath().getNextNode();
-
-                if(next.hasNextNode() || next.getTarget() != null){
-                    throw new WorkspacePatchException(
-                            String.format("Invalid request for field %s.",this.wp.getPath().toString()));
-                }
-
-                /* Add location to existing list */
-                if(next.getTargetType().equals(TargetType.LOCATIONS) &&
-                this.wp.getValue().getType().equals(ValueType.LOCATION) &&
-                this.wp.getValue().getValue() instanceof LocationDTO ldto) {
-
-                    String list_index = this.wp.getPath().getTarget();
+            case LOC_LISTS -> {
+                if(lp.getOp().equals(Op.ADD)){
+                    String list_index = lp.getPath().getTarget();
                     int index = 0;
 
                     try{
@@ -92,25 +67,53 @@ public class WorkspacePatcher {
 
                     LocationList ll;
                     try {
-                        ll = lll.get(index);
+                        ll = w.getLocationLists().get(index);
                     } catch (RuntimeException e) {
                         throw new WorkspacePatchException(String.format("Invalid list Id: index %d doesn't exist.",index));
                     }
 
-                    Location l = Location.from(ldto);
+                    Location l = Location.from(lp.getValue());
 
                     if(!ll.getLocations().contains(l))
                         ll.getLocations().add(l);
                     return;
                 }
+                throw new WorkspacePatchException(String.format("Invalid operation %s for field %s.",
+                        lp.getOp().toString(),
+                        lp.getPath().toString()));
+
+
+            }
+            case ITINERARIES ->  throw new WorkspacePatchException("Not Implemented");
+            default -> throw new WorkspacePatchException(String.format("Invalid operation %s for field %s.",
+                    lp.getOp().toString(),
+                    lp.getPath().toString()));
+        }
+
+    }
+
+    @Override
+    public void apply(LocationListPatch llp) throws WorkspacePatchException {
+
+        switch(llp.getOp()) {
+            case ADD -> {
+
+                /* Create new List */
+                if(!llp.getPath().hasNextNode()) {
+                    w.getLocationLists().add(LocationList.from(llp.getValue()));
+                    return;
+                }
+                if(!llp.getPath().hasNextNode())
+                    throw new WorkspacePatchException(
+                            String.format("Invalid request for field %s.",llp.getPath().toString()));
 
                 throw new WorkspacePatchException(String.format("Invalid request for operation %s on field %s",
-                        this.wp.getOp().toString(),
-                        this.wp.getPath().toString()));
+                        llp.getOp().toString(),
+                        llp.getPath().toString()));
             }
-            case REMOVE -> {
+/*            case REMOVE -> {
 
-                String list_index = this.wp.getPath().getTarget();
+                String list_index = llp.getPath().getTarget();
                 int index = 0;
 
                 try{
@@ -119,7 +122,7 @@ public class WorkspacePatcher {
                     throw new WorkspacePatchException(String.format("Invalid list Id format: %s.", list_index));
                 }
 
-                if(!this.wp.getPath().hasNextNode()) {
+                if(!llp.getPath().hasNextNode()) {
                     try {
                         lll.remove(index);
                         return;
@@ -135,18 +138,18 @@ public class WorkspacePatcher {
                     throw new WorkspacePatchException(String.format("Invalid list Id: index %d doesn't exist.",index));
                 }
 
-                PathNode next = this.wp.getPath().getNextNode();
+                PathNode next = llp.getPath().getNextNode();
 
                 if(next.hasNextNode() || next.getTarget() == null){
                     throw new WorkspacePatchException(
-                            String.format("Invalid request for field %s.",this.wp.getPath().toString()));
+                            String.format("Invalid request for field %s.",llp.getPath().toString()));
                 }
 
                 ll.getLocations().removeIf(loc -> loc.getPlaceId().equals(next.getTarget()));
             }
             case REPLACE -> {
 
-                String list_index = this.wp.getPath().getTarget();
+                String list_index = llp.getPath().getTarget();
                 int index = 0;
 
                 try{
@@ -162,37 +165,48 @@ public class WorkspacePatcher {
                     throw new WorkspacePatchException(String.format("Invalid list Id: index %d doesn't exist.",index));
                 }
 
-                if(!this.wp.getPath().hasNextNode())
+                if(!llp.getPath().hasNextNode())
                     throw new WorkspacePatchException(
-                            String.format("Invalid request for field %s.",this.wp.getPath().toString()));
+                            String.format("Invalid request for field %s.",llp.getPath().toString()));
 
-                PathNode next = this.wp.getPath().getNextNode();
+                PathNode next = llp.getPath().getNextNode();
 
                 if(next.hasNextNode() || next.getTarget() != null || !next.getTargetType().equals(TargetType.NAME)){
                     throw new WorkspacePatchException(
-                            String.format("Invalid request for field %s.",this.wp.getPath().toString()));
+                            String.format("Invalid request for field %s.",llp.getPath().toString()));
                 }
 
-            }
+            }*/
             default -> throw new WorkspacePatchException(String.format("Invalid operation %s for field %s.",
-                    this.wp.getOp().toString(),
-                    this.wp.getPath().toString()));
+                    llp.getOp().toString(),
+                    llp.getPath().toString()));
         }
 
     }
 
+    @Override
+    public void apply(CommentPatch cp) throws WorkspacePatchException {
+        throw new WorkspacePatchException(String.format("Unimplemented operation %s for field %s.",
+                cp.getOp().toString(),
+                cp.getPath().toString()));
+    }
 
-    public void apply(Workspace ws){
+    @Override
+    public void apply(LocationMetadataPatch lmp) throws WorkspacePatchException {
+        throw new WorkspacePatchException(String.format("Unimplemented operation %s for field %s.",
+                lmp.getOp().toString(),
+                lmp.getPath().toString()));
+    }
 
-        switch(wp.getPath().getTargetType()){
-            case COLLABORATORS -> operateOnUsers(ws.getCollaborators());
-            case LOC_LISTS -> operateOnLocLists(ws.getLocationLists());
-            case LOC_DATA -> throw new WorkspacePatchException("Unimplemented field location_data");
-            case ITINERARIES -> throw new WorkspacePatchException("Unimplemented field itineraries");
-            default -> throw new WorkspacePatchException("Invalid operation");
+    public void apply(PatchVisitor pv) throws WorkspacePatchException {
+        switch(pv){
+            case CommentPatch cp -> cp.visit(this);
+            case LocationListPatch llp -> llp.visit(this);
+            case LocationPatch lp -> lp.visit(this);
+            case UserPatch up -> up.visit(this);
+            case LocationMetadataPatch lmp -> lmp.visit(this);
+            default -> throw new IllegalStateException("Unexpected value: " + pv);
         }
-
-
     }
 
 }
