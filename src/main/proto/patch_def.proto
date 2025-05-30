@@ -18,6 +18,18 @@ enum Operation {
     test = 6;
 }
 
+message JsonPatch {
+  Operation op = 1;
+  string path = 2;
+  oneof value {
+    CommentDTO comment = 3;
+    LocationDTO location = 4;
+    LocationListDTO locationlist = 5;
+    LocationMetadataDTO locationmetadata = 6;
+    UserDTO user_id = 7;
+  }
+}
+
 message WorkspacePatch {
     string workspace_id = 1;
     string user = 2;

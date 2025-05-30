@@ -1,21 +1,22 @@
 package org.tripmonkey.domain.data;
 
-import jakarta.json.bind.annotation.JsonbProperty;
-import jakarta.json.bind.annotation.JsonbTransient;
-import org.tripmonkey.domain.patch.PatchVisitor;
-import org.tripmonkey.rest.domain.WorkspacePatch;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.tripmonkey.domain.patch.PatchVisitor;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class Workspace {
 
-    @JsonbProperty String wid;
-    @JsonbProperty List<User> collaborators;
-    @JsonbProperty List<LocationList> locationLists;
-    @JsonbTransient Map<Location, LocationMetadata> locationData; //TODO remove transient to implement LocationMetadata
-    @JsonbTransient List<PatchVisitor> history = List.of();
+    @JsonProperty String wid;
+    @JsonProperty List<User> collaborators;
+    @JsonProperty List<LocationList> locationLists;
+    @JsonIgnore Map<Location, LocationMetadata> locationData; //TODO remove transient to implement LocationMetadata
+    @JsonIgnore List<PatchVisitor> history = List.of();
 
     public String getWid() {
         return wid;
@@ -50,7 +51,7 @@ public class Workspace {
     }
 
     public static Workspace createFor(User u) {
-        return from(UUID.randomUUID().toString(), List.of(u), List.of(LocationList.newSaved()));
+        return from(UUID.randomUUID().toString(), new ArrayList<>(List.of(u)), new ArrayList<>(List.of(LocationList.newSaved())));
     }
 
 }

@@ -18,4 +18,5 @@ message Place {
   float rating = 2;
   repeated string type = 3;
   Geometry geometry = 4;
+  string name = 5;
 }

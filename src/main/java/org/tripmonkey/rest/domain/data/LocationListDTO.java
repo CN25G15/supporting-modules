@@ -1,13 +1,14 @@
 package org.tripmonkey.rest.domain.data;
 
-import jakarta.json.bind.annotation.JsonbNillable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class LocationListDTO {
 
-    @JsonbNillable String name;
-    @JsonbNillable List<LocationDTO> locations;
+    @JsonProperty
+    String name;
+    @JsonProperty List<LocationDTO> locations;
 
     public String getName() {
         return name;

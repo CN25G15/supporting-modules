@@ -8,11 +8,12 @@ public class PlaceMapper extends ProtoMapper<Place, org.tripmonkey.proto.google.
         return org.tripmonkey.proto.google.places.data.Place.newBuilder()
                 .setPlaceId(d.getPlace_id()).setRating(d.getRating())
                 .setGeometry(geometryMapper.serialize(d.getGeometry()))
+                .setName(d.getName())
                 .addAllType(d.getTypes()).build();
     }
 
     @Override
     protected Place deserialize(org.tripmonkey.proto.google.places.data.Place g) {
-        return Place.of(g.getPlaceId(),g.getRating(),g.getTypeList().stream().toList(),geometryMapper.deserialize(g.getGeometry()));
+        return Place.of(g.getPlaceId(),g.getName(),g.getRating(),g.getTypeList().stream().toList(),geometryMapper.deserialize(g.getGeometry()));
     }
 }

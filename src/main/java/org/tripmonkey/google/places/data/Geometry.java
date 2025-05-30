@@ -1,10 +1,15 @@
 package org.tripmonkey.google.places.data;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Geometry {
 
-    @JsonbProperty
+    @JsonProperty
     PlaceLocation location;
 
     public PlaceLocation getLocation() {

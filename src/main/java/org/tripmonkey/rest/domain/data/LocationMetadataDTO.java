@@ -1,13 +1,16 @@
 package org.tripmonkey.rest.domain.data;
 
-import jakarta.json.bind.annotation.JsonbNillable;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LocationMetadataDTO {
 
-    @JsonbNillable String description;
-    @JsonbNillable List<String> tags;
+    @JsonProperty
+    String description;
+    @JsonProperty List<String> tags;
 
     public String getDescription() {
         return description;

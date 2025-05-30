@@ -1,7 +1,7 @@
 package org.tripmonkey.domain.data;
 
-import jakarta.json.bind.annotation.JsonbProperty;
-import jakarta.json.bind.annotation.JsonbTransient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tripmonkey.rest.domain.data.UserDTO;
 
 import java.util.Optional;
@@ -9,8 +9,9 @@ import java.util.UUID;
 
 public class User {
 
-    @JsonbTransient private UUID id;
-    @JsonbProperty private String user_id;
+    @JsonIgnore private UUID id;
+    @JsonProperty
+    private String user_id;
 
     public static User from(UUID uuid){
         User u = new User();

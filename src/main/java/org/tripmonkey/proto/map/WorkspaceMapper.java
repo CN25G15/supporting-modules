@@ -2,6 +2,8 @@ package org.tripmonkey.proto.map;
 
 import org.tripmonkey.domain.data.Workspace;
 
+import java.util.stream.Collectors;
+
 public class WorkspaceMapper extends ProtoMapper<Workspace, org.tripmonkey.workspace.service.Workspace> {
     @Override
     public org.tripmonkey.workspace.service.Workspace serialize(Workspace d) {
@@ -16,8 +18,8 @@ public class WorkspaceMapper extends ProtoMapper<Workspace, org.tripmonkey.works
     public Workspace deserialize(org.tripmonkey.workspace.service.Workspace g) {
         return Workspace.from(
                 g.getWid(),
-                g.getCollaboratorsList().stream().map(userMapper::deserialize).toList(),
-                g.getLocationListsList().stream().map(locationListMapper::deserialize).toList()
+                g.getCollaboratorsList().stream().map(userMapper::deserialize).collect(Collectors.toList()), // necessary because toList makes immutableLists
+                g.getLocationListsList().stream().map(locationListMapper::deserialize).collect(Collectors.toList())
         );
     }
 }

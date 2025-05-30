@@ -1,15 +1,18 @@
 package org.tripmonkey.domain.data;
 
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tripmonkey.rest.domain.data.LocationListDTO;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LocationList {
 
-    @JsonbProperty String name;
-    @JsonbProperty List<Location> locations;
+    @JsonProperty
+    String name;
+    @JsonProperty List<Location> locations;
 
     public static LocationList from(String name, List<Location> locations) {
         LocationList ll = new LocationList();
@@ -19,11 +22,11 @@ public class LocationList {
     }
 
     public static LocationList from(LocationListDTO lldto) {
-        return from(lldto.getName(), lldto.getLocations().stream().map(Location::from).toList());
+        return from(lldto.getName(), lldto.getLocations().stream().map(Location::from).collect(Collectors.toList()));
     }
 
     public static LocationList newEmpty(String name) {
-        return from(name, List.of());
+        return from(name, new ArrayList<>());
     }
 
     public static LocationList newSaved() {

@@ -1,10 +1,11 @@
 package org.tripmonkey.rest.domain.data;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CommentDTO {
 
-    @JsonbProperty String comment;
+    @JsonProperty
+    String comment;
 
     public String getComment() {
         return comment;

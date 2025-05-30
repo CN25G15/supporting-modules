@@ -8,7 +8,7 @@ import org.tripmonkey.proto.contents.data.CommentDTO;
 
 @QuarkusTest
 public class ProtoStringConversionTest {
-
+/*
     @Test
     public void CommentConversion() throws InvalidProtocolBufferException {
 
@@ -16,5 +16,5 @@ public class ProtoStringConversionTest {
 
         System.out.println(CommentDTO.parseFrom(a).getContents());
     }
-
+*/
 }

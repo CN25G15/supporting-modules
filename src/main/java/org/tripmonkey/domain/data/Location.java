@@ -1,11 +1,12 @@
 package org.tripmonkey.domain.data;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tripmonkey.rest.domain.data.LocationDTO;
 
 public class Location {
 
-    @JsonbProperty private String place_id;
+    @JsonProperty
+    private String place_id;
 
 
     public static Location from(String place_id) {

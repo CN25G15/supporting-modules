@@ -1,11 +1,12 @@
 package org.tripmonkey.domain.data;
 
-import jakarta.json.bind.annotation.JsonbProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Comment {
 
-    @JsonbProperty private User u;
-    @JsonbProperty private String comment;
+    @JsonProperty
+    private User u;
+    @JsonProperty private String comment;
 
     public String getComment() {
         return comment;
