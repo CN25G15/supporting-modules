@@ -121,7 +121,7 @@ public class GooglePlaceTest {
         APIResponse r =  pci.getLocationDetails("key",String.join(",",List.of("place_id", "name", "type", "geometry", "rating")),
                 "ChIJ68aBlEKuEmsRHUA9oME5Zh0");
 
-        Assertions.assertNotNull(r.getResult());
+        Assertions.assertNotNull(r.getErrorMessage());
 
 
     }
